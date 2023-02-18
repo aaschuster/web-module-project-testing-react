@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent, screen, getByTestId } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Show from './../Show';
+import userEvent from '@testing-library/user-event';
 
 const egShowData = {
     name: "The Office",
@@ -33,6 +34,25 @@ test('renders same number of options seasons are passed in', () => {
     expect(screen.getAllByTestId("season-option")).toHaveLength(9);
 });
 
-test('handleSelect is called when an season is selected', () => { });
+test('handleSelect is called when an season is selected', () => {
+    const mockHandleSelect = jest.fn(() => {return("MOCK HANDLE SELECT")})
 
-test('component renders when no seasons are selected and when rerenders with a season passed in', () => { });
+    render(<Show show={egShowData} selectedSeason={"none"} handleSelect={mockHandleSelect}/>)
+    
+    const select = screen.getByRole("combobox");
+    const options = screen.getAllByTestId("season-option");
+    
+    userEvent.selectOptions(select, [options[1]]);
+
+    expect(mockHandleSelect.mock.calls).toHaveLength(1);
+});
+
+test('component renders when no seasons are selected and when rerenders with a season passed in', () => {
+    const {container, rerender } = render(<Show show={egShowData} selectedSeason={"none"}/>);
+
+    expect(container.querySelector(".episodes")).not.toBeInTheDocument();
+
+    rerender(<Show show={egShowData} selectedSeason={"0"} />)
+
+    expect(screen.getByTestId("episodes-container")).toBeInTheDocument();
+});
