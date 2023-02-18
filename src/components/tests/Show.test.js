@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import Show from './../Show';
 import userEvent from '@testing-library/user-event';
 
-const egShowData = {
+export const egShowData = {
     name: "The Office",
     summary: "The Office is an American mockumentary sitcom television series that depicts the everyday work lives of office employees at the Scranton, Pennsylvania, branch of the fictional Dunder Mifflin Paper Company.",
     seasons: [
@@ -48,7 +48,7 @@ test('component renders when no seasons are selected and when rerenders with a s
     const {container, rerender } = render(<Show show={egShowData} selectedSeason={"none"}/>);
 
     expect(screen.queryByTestId("episodes-container")).not.toBeInTheDocument();
-    
+
     rerender(<Show show={egShowData} selectedSeason={"0"} />)
     expect(screen.queryByTestId("episodes-container")).toBeInTheDocument();
 });
