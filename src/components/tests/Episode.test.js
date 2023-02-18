@@ -31,16 +31,15 @@ test("renders the summary test passed as prop", () => {
     const summaryOnScreen = screen.getByText(newSummary);
 
     expect(summaryOnScreen).toBeInTheDocument();
-    console.log(summaryOnScreen.textContent);
     expect(summaryOnScreen).toHaveTextContent(newSummary)
     expect(summaryOnScreen).toBeVisible();
 });
 
 test("renders default image when image is not defined", () => {
-    const {container} = render(<Episode episode={{...exampleEpisodeData, image: null}}/>);
+    render(<Episode episode={{...exampleEpisodeData, image: null}}/>);
 
-    const [image] = container.getElementsByClassName("episode-image");
+    const img = screen.queryByAltText("https://i.ibb.co/2FsfXqM/stranger-things.png");
 
-    expect(image).toHaveAttribute("src", "https://i.ibb.co/2FsfXqM/stranger-things.png");
-    expect(image).toHaveAttribute("alt", "https://i.ibb.co/2FsfXqM/stranger-things.png");    
+    expect(img).toHaveAttribute("src", "https://i.ibb.co/2FsfXqM/stranger-things.png");
+    expect(img).toBeInTheDocument();
 });
