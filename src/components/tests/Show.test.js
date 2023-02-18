@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen, getByTestId } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Show from './../Show';
 
@@ -23,7 +23,10 @@ test('renders without errors', () => {
     render(<Show show={egShowData} selectedSeason={"none"}/>);
 });
 
-test('renders Loading component when prop show is null', () => { });
+test('renders Loading component when prop show is null', () => {
+    render(<Show show={null} selectedSeason={"none"}/>)
+    expect(screen.getByTestId("loading-container")).toBeInTheDocument();
+});
 
 test('renders same number of options seasons are passed in', () => { });
 
