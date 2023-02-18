@@ -35,16 +35,13 @@ test('renders same number of options seasons are passed in', () => {
 });
 
 test('handleSelect is called when an season is selected', () => {
-    const mockHandleSelect = jest.fn(() => {return("MOCK HANDLE SELECT")})
+    const handleSelect = jest.fn();
 
-    render(<Show show={egShowData} selectedSeason={"none"} handleSelect={mockHandleSelect}/>)
+    render(<Show show={egShowData} selectedSeason={"none"} handleSelect={handleSelect}/>)
     
-    const select = screen.getByRole("combobox");
-    const options = screen.getAllByTestId("season-option");
-    
-    userEvent.selectOptions(select, [options[1]]);
+    userEvent.selectOptions(screen.getByLabelText(/select a season/i), ['1']);
 
-    expect(mockHandleSelect.mock.calls).toHaveLength(1);
+    expect(handleSelect).toBeCalled();
 });
 
 test('component renders when no seasons are selected and when rerenders with a season passed in', () => {
