@@ -39,7 +39,8 @@ test("renders the summary test passed as prop", () => {
 test("renders default image when image is not defined", () => {
     const {container} = render(<Episode episode={{...exampleEpisodeData, image: null}}/>);
 
-    const image = container.getElementsByClassName("episode-image");
+    const [image] = container.getElementsByClassName("episode-image");
 
-    expect(image[0]).toHaveAttribute("src", "https://i.ibb.co/2FsfXqM/stranger-things.png");
+    expect(image).toHaveAttribute("src", "https://i.ibb.co/2FsfXqM/stranger-things.png");
+    expect(image).toHaveAttribute("alt", "https://i.ibb.co/2FsfXqM/stranger-things.png");    
 });
