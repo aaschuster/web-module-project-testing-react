@@ -34,8 +34,12 @@ test("renders the summary test passed as prop", () => {
     console.log(summaryOnScreen.textContent);
     expect(summaryOnScreen).toHaveTextContent(newSummary)
     expect(summaryOnScreen).toBeVisible();
-
-
 });
 
-test("renders default image when image is not defined", () => {});
+test("renders default image when image is not defined", () => {
+    const {container} = render(<Episode episode={{...exampleEpisodeData, image: null}}/>);
+
+    const image = container.getElementsByClassName("episode-image");
+
+    expect(image[0]).toHaveAttribute("src", "https://i.ibb.co/2FsfXqM/stranger-things.png");
+});
